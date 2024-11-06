@@ -15,22 +15,20 @@ import java.util.Map;
 @ControllerAdvice
 public class EmployeeControllerHandler {
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<Map<String, string>> showErrors(MethodArgumentNotValidException ex)
+    public ResponseEntity<Map<String, String>> showErrors(MethodArgumentNotValidException ex)
     {
-        Map<String, string> errorList = new HashMap<>();
+        Map<String, String> errorList = new HashMap<>();
         Map<String, Object> errorResponse = new HashMap<>();
         for (FieldError error : ex.getFieldErrors())
         {
             String err_name = error.getField();
             String err_message = error.getDefaultMessage();
-            String err_email = error.getDefaultMessage();
-
             errorList.put(err_name, err_message);
         }
         errorResponse.put("timestamp", LocalDateTime.now());
         errorResponse.put("errors", errorList);
 
-        return ResponseEntity.status(400).body(errorList);
+        return ResponseEntity.status(404).body(errorList);
 
     }
 }
